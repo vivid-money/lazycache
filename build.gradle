@@ -36,3 +36,6 @@ dependencies {
     testImplementation(deps.test.kotestAssertions)
     testImplementation(deps.test.kotestProperty)
 }
+
+apply from: "gradle/kotlin-publishing.gradle"
+apply from: "gradle/detekt.gradle"

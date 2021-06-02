@@ -13,6 +13,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
+@Suppress("TooManyFunctions")
 class InMemoryCache @Inject constructor() {
 
     private val clearableKeys = Collections.newSetFromMap(ConcurrentHashMap<String, Boolean>())
@@ -28,12 +29,12 @@ class InMemoryCache @Inject constructor() {
 
     fun <T : Any> putIfPresent(
         key: String,
-        newValue: (previousValue: T) -> T
+        newValue: (previousValue: T) -> T,
     ) = updateInternal<T>(key) { it?.let(newValue) }
 
     fun <T : Any> put(
         key: String,
-        newValue: (previousValue: T?) -> T
+        newValue: (previousValue: T?) -> T,
     ) = updateInternal(key, newValue)
 
     fun <T : Any> get(key: String): Maybe<T> = Maybe.create<T> { emitter ->
@@ -50,7 +51,7 @@ class InMemoryCache @Inject constructor() {
 
     fun <T : Any> of(
         key: String,
-        keepAlways: Boolean
+        keepAlways: Boolean,
     ): CacheHandle<T> {
         if (!keepAlways) clearableKeys.add(key)
         return DelegatingCacheHandle(key, this)
@@ -59,7 +60,7 @@ class InMemoryCache @Inject constructor() {
     fun <T : Any> of(
         customKey: String? = null,
         keepAlways: Boolean = false,
-        type: Class<T>
+        type: Class<T>,
     ): CacheHandle<T> {
         val key = CacheKeyGenerator(TypeToken.get(type), customKey).generate(InMemoryCacheArg)
         return of(key, keepAlways)
@@ -95,7 +96,7 @@ class InMemoryCache @Inject constructor() {
  */
 inline fun <reified T : Any> InMemoryCache.of(
     customKey: String? = null,
-    keepAlways: Boolean = false
+    keepAlways: Boolean = false,
 ): CacheHandle<T> = of(customKey, keepAlways, T::class.java)
 
 /** Class that is used to distinguish keys for lazy and in-memory caches */

@@ -1,0 +1,17 @@
+Properties properties = new Properties()
+properties.load(new File(rootProject.projectDir, "local.properties").newDataInputStream())
+if (properties.getProperty("lazycache.dev.mode") == "true") {
+    includeBuild("lazycache") {
+        dependencySubstitution {
+            all { DependencySubstitution dependency ->
+                if (dependency.requested instanceof ModuleComponentSelector &&
+                        dependency.requested.group == "com.github.vivid-money" &&
+                        dependency.requested.module == "lazycache"
+                ) {
+                    error("Here")
+                    dependency.useTarget rootProject
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,7 @@
+tasks.withType(Test) {
+    useJUnitPlatform()
+}
+
+dependencies {
+    testImplementation(deps.test.jUnit5)
+}

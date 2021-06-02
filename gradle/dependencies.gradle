@@ -1,0 +1,34 @@
+ext.versions = [
+        kotlin       : "1.5.0",
+        detekt       : "1.17.1",
+        rxJava2      : "2.2.21",
+        rxJava3Bridge: "3.0.0",
+        rxJava3      : "3.0.11",
+        jUnit5       : "5.7.1",
+        kotest       : "4.4.3",
+        gson         : "2.8.6",
+]
+
+ext.deps = [
+        gradle       : [
+                kotlinPlugin: "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin",
+                detektPlugin: "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$versions.detekt"
+        ],
+        di           : [
+                annotations: "javax.inject:javax.inject:1"
+        ],
+        serialization: [
+                gson: "com.google.code.gson:gson:$versions.gson"
+        ],
+        rx           : [
+                rxJava2      : "io.reactivex.rxjava2:rxjava:$versions.rxJava2",
+                rxJava3      : "io.reactivex.rxjava3:rxjava:$versions.rxJava3",
+                rxJava3Bridge: "com.github.akarnokd:rxjava3-bridge:$versions.rxJava3Bridge",
+        ],
+        test         : [
+                jUnit5           : "org.junit.jupiter:junit-jupiter:$versions.jUnit5",
+                kotestJunitRunner: "io.kotest:kotest-runner-junit5-jvm:$versions.kotest",
+                kotestAssertions : "io.kotest:kotest-assertions-core:$versions.kotest",
+                kotestProperty   : "io.kotest:kotest-property:$versions.kotest",
+        ],
+]
